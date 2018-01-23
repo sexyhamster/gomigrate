@@ -111,7 +111,7 @@ func NewMigratorWithLogger(db *sql.DB, adapter Migratable, migrationsPath string
 	if err := migrator.fetchMigrations(); err != nil {
 		return nil, err
 	}
-	if err := migrator.getMigrationStatuses(); err != nil {
+	if err := migrator.GetMigrationStatuses(); err != nil {
 		return nil, err
 	}
 
@@ -167,7 +167,7 @@ func (m *Migrator) fetchMigrations() error {
 
 // Queries the migration table to determine the status of each
 // migration.
-func (m *Migrator) getMigrationStatuses() error {
+func (m *Migrator) GetMigrationStatuses() error {
 	for _, migration := range m.migrations {
 		row := m.DB.QueryRow(m.dbAdapter.GetMigrationSql(), migration.Id)
 		var mid uint64
